@@ -1,8 +1,10 @@
-package focus;
+package focus.game;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 
-import main.Focus;
+import focus.Focus;
+
 
 public class PauseMenu extends Focus {
 
@@ -11,7 +13,7 @@ public class PauseMenu extends Focus {
 	}
 	
 	@Override
-	public void update() {
+	public void update(Point mouse) {
 		// TODO only would really deal with hovering and settings and stuff
 	}
 

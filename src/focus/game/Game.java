@@ -1,7 +1,8 @@
-package focus;
+package focus.game;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D.Float;
@@ -16,8 +17,8 @@ import engine.event.CollisionHandler;
 import engine.serial.WorldLoad;
 import engine.serial.WorldSave;
 import engine.entity.Character;
+import focus.Focus;
 
-import main.Focus;
 
 public class Game extends Focus implements CollisionHandler{
 	private Engine engine;
@@ -148,7 +149,7 @@ public class Game extends Focus implements CollisionHandler{
 		entities.add(n);
 	}
 
-	public void update() {
+	public void update(Point mouse) {
 		engine.update(entities);
 		updateCharacter();
 		// TODO Do physics. Handle collisions. Finish game logic

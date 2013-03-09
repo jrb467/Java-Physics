@@ -1,6 +1,7 @@
-package main;
+package focus;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -26,7 +27,7 @@ public abstract class Focus implements MouseListener, KeyListener{
 	
 	public abstract void closing();
 	
-	public abstract void update();
+	public abstract void update(Point mouse);
 	
 	public abstract void render(Graphics2D g, int width, int height);
 	

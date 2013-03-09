@@ -1,3 +1,7 @@
+//dE6gx7XP4vK2
+
+
+
 package main;
 
 import java.awt.EventQueue;
@@ -41,7 +45,7 @@ public class GameFrame extends JFrame{
 		setContentPane(contentPane);
 		manager = new GameManager(this);
 		addWindowListener(manager);
-		addMouseListener(manager);
+		contentPane.addMouseListener(manager);
 		addKeyListener(manager);
 		setVisible(true);
 		Thread main = new Thread(){
@@ -68,9 +72,9 @@ public class GameFrame extends JFrame{
 		
 		while(alive){
 			before = System.nanoTime();
-			manager.manageGameLogic();
+			manager.update(contentPane.getMousePosition());
 			if(prepareGraphics())
-				manager.renderGame(graphics, getWidth(), getHeight());
+				manager.render(graphics, getWidth(), getHeight());
 			paintGame();
 			after = System.nanoTime();
 			timeDiff = after-before;
@@ -91,7 +95,7 @@ public class GameFrame extends JFrame{
 			}
 			//update without rendering if the whole process takes too long
 			while((extraTime>=period) && (skips<=MAX_FRAME_SKIPS)){
-				manager.manageGameLogic();
+				manager.update(contentPane.getMousePosition());
 				extraTime -= period;
 				skips++;
 			}
