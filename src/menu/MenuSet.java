@@ -12,11 +12,5 @@ public class MenuSet extends SubFocus {
 			priority[i] = i;
 		}
 	}
-	
-	@Override
-	public void closing() {
-		// TODO Auto-generated method stub
-
-	}
 
 }

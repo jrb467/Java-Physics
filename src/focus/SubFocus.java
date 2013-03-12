@@ -36,6 +36,12 @@ public abstract class SubFocus extends Focus {
 		}
 	}
 	
+	public void closing(){
+		for(Focus f: foci){
+			f.closing();
+		}
+	}
+	
 	public void keyPressed(KeyEvent arg0) {
 		foci[priority[0]].keyPressed(arg0);
 	}

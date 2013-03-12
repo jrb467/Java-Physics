@@ -14,6 +14,11 @@ public abstract class MenuItem extends Focus {
 		super(false, false);
 	}
 	
+	public MenuItem(int x, int y, int width, int height) {
+		super(false, false);
+		r = new Rectangle(x,y,width,height);
+	}
+	
 	public void update(Point mouse){
 		if(r.contains(mouse)){
 			onHover(mouse);

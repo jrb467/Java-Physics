@@ -3,7 +3,6 @@ package menu;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 
 
@@ -14,8 +13,7 @@ public class Button extends MenuItem {
 	//Color, style, etc?
 	
 	public Button(int x, int y, int width, int height, String label){
-		super();
-		r = new Rectangle(x, y, width, height);
+		super(x,y,width,height);
 		this.label = label;
 	}
 	
