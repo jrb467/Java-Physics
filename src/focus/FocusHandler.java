@@ -34,6 +34,28 @@ public abstract class FocusHandler implements MouseListener, KeyListener{
 		}
 	}
 	
+	public void setFocus(int index, int value){
+		int temp = priority[index];
+		int temp2;
+		priority[index] = value;
+		for(int i = index+1; i < priority.length; i++){
+			if(priority[i] == value){
+				temp2 = priority[i];
+				priority[i] = temp;
+				temp = temp2;
+				break;
+			}else{
+				temp2 = priority[i];
+				priority[i] = temp;
+				temp = temp2;
+			}
+		}
+		if(index == 0){
+			foci[priority[0]].gainedFocus();
+			foci[priority[1]].lostFocus();
+		}
+	}
+	
 	public void keyPressed(KeyEvent arg0) {
 		foci[priority[0]].keyPressed(arg0);
 	}

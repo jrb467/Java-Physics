@@ -11,6 +11,7 @@ public abstract class Focus implements MouseListener, KeyListener{
 	public final boolean HALT_BACKGROUND_UPDATES;
 	public final boolean HALT_BACKGROUND_RENDER;
 	protected boolean hasFocus = false;
+	public int action;
 	
 	public Focus(boolean haltUpdates, boolean haltRendering){
 		HALT_BACKGROUND_UPDATES = haltUpdates;

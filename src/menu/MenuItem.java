@@ -9,6 +9,8 @@ import focus.Focus;
 public abstract class MenuItem extends Focus {
 	public Rectangle r = new Rectangle(0,0,0,0);
 	public boolean hover = false;
+	public float horizAlign = -1;
+	public float vertAlign = -1;
 	
 	public MenuItem() {
 		super(false, false);
@@ -17,6 +19,28 @@ public abstract class MenuItem extends Focus {
 	public MenuItem(int x, int y, int width, int height) {
 		super(false, false);
 		r = new Rectangle(x,y,width,height);
+		if(x < 0){
+			horizAlign = (float)-x/100;
+		}
+		if(y < 0){
+			vertAlign = (float)-y/100;
+		}
+	}
+	
+	public Rectangle getRect(int width, int height){
+		if(r.x < 0){
+			if(r.y < 0){
+				return new Rectangle((int)(width*horizAlign-r.width/2), (int)(height*vertAlign-r.height/2), r.width, r.height);
+			}else{
+				return new Rectangle((int)(width*horizAlign-r.width/2), r.y, r.width, r.height);
+			}
+		}else{
+			if(r.y < 0){
+				return new Rectangle(r.x, (int)(height*vertAlign-r.height/2), r.width, r.height);
+			}else{
+				return new Rectangle(r.x, r.y, r.width, r.height);
+			}
+		}
 	}
 	
 	public void update(Point mouse){

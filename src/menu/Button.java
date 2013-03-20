@@ -3,6 +3,7 @@ package menu;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 
 
@@ -23,6 +24,7 @@ public class Button extends MenuItem {
 
 	@Override
 	public void render(Graphics2D g, int width, int height) {
+		Rectangle r2 = getRect(width, height);
 		if(hover){
 			if(down){
 				g.setColor(Color.darkGray);
@@ -32,9 +34,15 @@ public class Button extends MenuItem {
 		}else{
 			g.setColor(Color.lightGray);
 		}
-		g.fillRect(r.x, r.y, r.width, r.height);
-		g.setColor(Color.black);
-		g.drawRect(r.x, r.y, r.width, r.height);
+		g.fillRect(r2.x,r2.y,r.width,r.height);
+		if(hasFocus){
+			g.setColor(Color.blue);
+			g.drawRect(r2.x, r2.y, r.width, r.height);
+			g.drawRect(r2.x-1, r2.y-1, r.width+1, r.height+1);
+		}else{
+			g.setColor(Color.black);
+			g.drawRect(r2.x, r2.y, r.width, r.height);
+		}
 	}
 	
 	public void mousePressed(MouseEvent e){
