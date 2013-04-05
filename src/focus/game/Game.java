@@ -1,6 +1,7 @@
 package focus.game;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
@@ -14,10 +15,10 @@ import engine.entity.BaseBlock;
 import engine.entity.Entity;
 import engine.event.Collision;
 import engine.event.CollisionHandler;
-import engine.serial.WorldLoad;
 import engine.serial.WorldSave;
 import engine.entity.Character;
 import focus.Focus;
+import focus.LightFocusHandler;
 
 
 public class Game extends Focus implements CollisionHandler{
@@ -31,8 +32,8 @@ public class Game extends Focus implements CollisionHandler{
 	
 	//TODO add in the character and do the key events for it
 	
-	public Game(){
-		super(false, true); //TODO the first one (halt updates) may be true
+	public Game(LightFocusHandler handler,Component source){
+		super(false, true,1,handler,source); //TODO the first one (halt updates) may be true
 		/*
 		try {
 			entities = WorldLoad.loadWorld("boners.gamesave");
@@ -156,9 +157,9 @@ public class Game extends Focus implements CollisionHandler{
 
 	}
 
-	public void render(Graphics2D g, int width, int height){
+	public void render(Graphics2D g){
 		g.setColor(Color.white);
-		g.fillRect(0, 0, width, height);
+		g.fillRect(0, 0, source.getWidth(), source.getHeight());
 		Object[] current;
 		Float[] points;
 		int id;
@@ -249,6 +250,8 @@ public class Game extends Focus implements CollisionHandler{
 			rPressed();
 		}else if(key == KeyEvent.VK_S){
 			brake = true;
+		}else if(key == KeyEvent.VK_P){
+			handler.handleInfo(0, 1);
 		}
 	}
 	

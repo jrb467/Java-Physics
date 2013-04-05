@@ -28,7 +28,7 @@ public class Character extends Entity {
 	@Override
 	public void handleCollision(Collision c) {
 		if(wantsJump){
-			velocity.y -= 40;
+			velocity.y = -40;
 			wantsJump = false;
 		}
 	}

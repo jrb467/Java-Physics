@@ -1,40 +1,65 @@
 package focus;
 
+import java.awt.Component;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 
-public abstract class SubFocus extends Focus {
+public abstract class SubFocus extends Focus implements LightFocusHandler{
 	public Focus[] foci;
 	public int[] priority;
 
-	public SubFocus(boolean haltUpdates, boolean haltRendering) {
-		super(haltUpdates, haltRendering);
+	public SubFocus(boolean haltUpdates, boolean haltRendering, int id, LightFocusHandler handler, Component source) {
+		super(haltUpdates, haltRendering, id, handler, source);
 	}
 	
 	public void update(Point mouse){
 		for(int i = 0; i < priority.length; i++){
 			foci[priority[i]].update(mouse);
-			if(foci[priority[i]].HALT_BACKGROUND_UPDATES == true){
+			if(foci[priority[i]].HALT_BACKGROUND_UPDATES){
 				break;
 			}
 		}
 	}
 	
-	public void render(Graphics2D g, int width, int height){
-		int depth = 1;
-		for(int i = 0; i < priority.length; i++){
-			if(foci[priority[i]].HALT_BACKGROUND_RENDER == true){
+	public void setFocus(int index, int value){
+		int temp = priority[index];
+		int temp2;
+		priority[index] = value;
+		for(int i = index+1; i < priority.length; i++){
+			if(priority[i] == value){
+				temp2 = priority[i];
+				priority[i] = temp;
+				temp = temp2;
 				break;
+			}else{
+				temp2 = priority[i];
+				priority[i] = temp;
+				temp = temp2;
 			}
-			depth++;
 		}
-		for(int i = depth-1; i >= 0; i--){
-			foci[priority[i]].render(g, width, height);
+		if(index == 0){
+			foci[priority[0]].gainedFocus();
+			foci[priority[1]].lostFocus();
 		}
 	}
+	
+	public void render(Graphics2D g){
+		int depth = -1;
+		for(int i = 0; i < priority.length; i++){
+			depth++;
+			if(foci[priority[i]].HALT_BACKGROUND_RENDER){
+				break;
+			}
+		}
+		for(int i = depth; i >= 0; i--){
+			foci[priority[i]].render(g);
+		}
+	}
+	
+	public void handleInfo(int i, int id){}
 	
 	public void closing(){
 		for(Focus f: foci){

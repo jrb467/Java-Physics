@@ -1,22 +1,29 @@
 package focus;
 
+import java.awt.Component;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
-public abstract class Focus implements MouseListener, KeyListener{
+public abstract class Focus implements LightFocus{
 	public final boolean HALT_BACKGROUND_UPDATES;
 	public final boolean HALT_BACKGROUND_RENDER;
+	public LightFocusHandler handler;
+	public Component source;
 	protected boolean hasFocus = false;
 	public int action;
+	public int id;
 	
-	public Focus(boolean haltUpdates, boolean haltRendering){
+	public Focus(boolean haltUpdates, boolean haltRendering, int id, LightFocusHandler handler, Component source){
 		HALT_BACKGROUND_UPDATES = haltUpdates;
 		HALT_BACKGROUND_RENDER = haltRendering;
+		this.id = id;
+		this.handler = handler;
+		this.source = source;
 	}
+	
+	public void handleCommand(int c){}
 	
 	public void gainedFocus(){
 		hasFocus = true;
@@ -30,7 +37,7 @@ public abstract class Focus implements MouseListener, KeyListener{
 	
 	public abstract void update(Point mouse);
 	
-	public abstract void render(Graphics2D g, int width, int height);
+	public abstract void render(Graphics2D g);
 	
 	public void keyPressed(KeyEvent arg0) {}
 	public void keyReleased(KeyEvent arg0) {}

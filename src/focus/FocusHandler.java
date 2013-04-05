@@ -3,12 +3,10 @@ package focus;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 
-public abstract class FocusHandler implements MouseListener, KeyListener{
+public abstract class FocusHandler implements LightFocusHandler{
 	public Focus[] foci;
 	public int[] priority;
 	
@@ -21,7 +19,7 @@ public abstract class FocusHandler implements MouseListener, KeyListener{
 		}
 	}
 	
-	public void render(Graphics2D g, int width, int height){
+	public void render(Graphics2D g){
 		int depth = 1;
 		for(int i = 0; i < priority.length; i++){
 			if(foci[priority[i]].HALT_BACKGROUND_RENDER == true){
@@ -30,11 +28,11 @@ public abstract class FocusHandler implements MouseListener, KeyListener{
 			depth++;
 		}
 		for(int i = depth-1; i >= 0; i--){
-			foci[priority[i]].render(g, width, height);
+			foci[priority[i]].render(g);
 		}
 	}
 	
-	public void setFocus(int index, int value){
+	public void setFocus(int value, int index){
 		int temp = priority[index];
 		int temp2;
 		priority[index] = value;
@@ -55,6 +53,8 @@ public abstract class FocusHandler implements MouseListener, KeyListener{
 			foci[priority[1]].lostFocus();
 		}
 	}
+	
+	public void handleInfo(int i, int id){}
 	
 	public void keyPressed(KeyEvent arg0) {
 		foci[priority[0]].keyPressed(arg0);

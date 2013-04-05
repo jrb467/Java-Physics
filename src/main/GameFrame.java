@@ -74,7 +74,7 @@ public class GameFrame extends JFrame{
 			before = System.nanoTime();
 			manager.update(contentPane.getMousePosition());
 			if(prepareGraphics())
-				manager.render(graphics, getWidth(), getHeight());
+				manager.render(graphics);
 			paintGame();
 			after = System.nanoTime();
 			timeDiff = after-before;

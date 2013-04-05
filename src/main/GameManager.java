@@ -1,8 +1,6 @@
 package main;
 
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
@@ -10,7 +8,7 @@ import focus.*;
 import focus.game.*;
 
 
-public class GameManager extends FocusHandler implements WindowListener, MouseListener, KeyListener{
+public class GameManager extends FocusHandler implements WindowListener{
 	private GameFrame parent;
 	
 	public GameManager(GameFrame frame){
@@ -18,12 +16,37 @@ public class GameManager extends FocusHandler implements WindowListener, MouseLi
 		frame.addWindowListener(this);
 		foci = new Focus[3];
 		priority = new int[3];
-		foci[0] = new MainMenu();
-		foci[1] = new Game();
-		foci[2] = new PauseMenu();
-		priority[0] = 1;
-		priority[1] = 0;
+		foci[0] = new MainMenu(this, parent);
+		foci[1] = new Game(this, parent);
+		foci[2] = new PauseMenu(this, parent);
+		priority[0] = 0;
+		priority[1] = 1;
 		priority[2] = 2;
+	}
+	
+	public void handleInfo(int i, int id){
+		switch(id){
+		case 0: //menu
+			switch(i){
+			case 0: //local game
+				setFocus(1, 0);
+				break;
+			case 1: //quit
+				for(Focus c: foci){
+					c.closing();
+				}
+				parent.destroy();
+				break;
+			}
+			break;
+		case 1: //game
+			//TODO add switch(i) if needed
+			setFocus(2, 0);
+			break;
+		case 2: //pausemenu
+			setFocus(i, 0); //i corresponds to either the game or main menu
+			break;
+		}
 	}
 
 	public void windowActivated(WindowEvent e) {}
@@ -42,6 +65,9 @@ public class GameManager extends FocusHandler implements WindowListener, MouseLi
 	
 	public void keyPressed(KeyEvent arg0) {
 		if(arg0.getKeyCode() == KeyEvent.VK_ESCAPE){
+			for(Focus i: foci){
+				i.closing();
+			}
 			parent.destroy();
 			return;
 		}
